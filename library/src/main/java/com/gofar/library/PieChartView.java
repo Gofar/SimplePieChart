@@ -12,6 +12,8 @@ import android.view.View;
 import java.util.List;
 
 /**
+ * 简单饼状图
+ *
  * @author lcf
  * @date 30/11/2018 下午 3:25
  * @since 1.0
