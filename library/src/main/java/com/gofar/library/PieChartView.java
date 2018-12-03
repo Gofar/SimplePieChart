@@ -42,9 +42,15 @@ public class PieChartView extends View {
         float width = getWidth();
         float height = getHeight();
         // 减去内边距，计算中心点
-        float centerX = (width - getPaddingLeft() - getPaddingRight()) / 2;
-        float centerY = (height - getPaddingTop() - getPaddingBottom()) / 2;
-        float radius = Math.min(centerX, centerY);
+        // X轴最大半径
+        float radiusX = (width - getPaddingLeft() - getPaddingRight()) / 2;
+        // Y轴最大半径
+        float radiusY = (height - getPaddingTop() - getPaddingBottom()) / 2;
+        // 中心点
+        float centerX = radiusX + getPaddingLeft();
+        float centerY = radiusY + getPaddingTop();
+        // 取小的半径为圆的半径
+        float radius = Math.min(radiusX, radiusY);
         if (mBorder <= 0) {
             // 默认边框宽度为半径的1/5
             mBorder = radius / 5;
@@ -53,10 +59,11 @@ public class PieChartView extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(mBorder);
         float outRadius = radius - mBorder / 2;
-        float inLeft = centerX - outRadius + mBorder;
-        float inRight = centerX + outRadius - mBorder;
-        float inTop = centerY - outRadius + mBorder;
-        float inBottom = centerY + outRadius - mBorder;
+        // 绘制时有空隙，加1个像素的偏移
+        float inLeft = centerX - outRadius + mBorder - 1;
+        float inRight = centerX + outRadius - mBorder + 1;
+        float inTop = centerY - outRadius + mBorder - 1;
+        float inBottom = centerY + outRadius - mBorder + 1;
 
         if (mData != null && !mData.isEmpty()) {
             mPaint.setColor(mOutBorderColor);
